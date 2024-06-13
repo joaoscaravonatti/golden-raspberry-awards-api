@@ -1,12 +1,12 @@
-import { openDb, Db } from '@/infra/sqlite/db'
-import { createDb } from '@/infra/sqlite/create-db'
+import { openDb, Db } from '@/infra/sqlite/utils/db'
+import { createDb } from '@/infra/sqlite/utils/create-db'
 import { readCsv } from '@/infra/fs/read-csv'
-import { expressServer } from '@/infra/http/express-server'
-import { setupRouter } from '@/main/setup-router'
+import { expressServer } from '@/infra/http/utils/express-server'
+import { setupRouter } from '@/main/config/setup-router'
 
 export async function main () {
-  let db: Db | undefined = undefined
   const httpServer = expressServer()
+  let db: Db | undefined = undefined
 
   const stopApp = () => {
     httpServer.stop()
