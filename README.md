@@ -36,3 +36,7 @@ Para rodar os testes, execute:
 ```sh
 npm test
 ```
+
+## Alterar base de dados
+
+Para utilizar outros conjuntos de dados, basta substituir o arquivo `movielist.csv` localizado na raiz do projeto
