@@ -5,15 +5,15 @@ export async function createDb (db: Db, data: string[]) {
   await insertData(db, data)
 }
 
-
 async function insertData (db: Db, movies: string[]) {
   for (const movie of movies) {
     const [year, title, studios, producers, winner] = movie.split(';')
     const movieId = await insertMovie(db, Number(year), title, winner === 'yes')
-    const splitRegex = /,\s*|and\s*/g
+    const splitRegex = /\s*,\s*|\s+and\s+/
 
     for (const producer of producers.split(splitRegex)) {
-      await insertProducer(db, producer, movieId)
+      const name = producer.replace('and ', '')
+      await insertProducer(db, name, movieId)
     }
 
     for (const studio of studios.split(splitRegex)) {

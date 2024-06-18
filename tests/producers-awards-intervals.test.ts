@@ -34,4 +34,28 @@ test.describe('GET /producers/awards/intervals', () => {
     assert.deepEqual(typeof data.min[0].previousWin === 'number', true)
     assert.deepEqual(typeof data.min[0].followingWin === 'number', true)
   })
+
+  test.it('should return an object with correct data based on the default data', async () => {
+    const result = await fetch('http://localhost:3000/producers/awards/intervals')
+    const data = await result.json() as any
+
+    assert.deepStrictEqual(data, {
+      min: [
+        {
+          producer: "Joel Silver",
+          interval: 1,
+          previousWin: 1990,
+          followingWin: 1991
+        }
+      ],
+      max: [
+        {
+          producer: "Matthew Vaughn",
+          interval: 13,
+          previousWin: 2002,
+          followingWin: 2015
+        }
+      ]
+    })
+  })
 })

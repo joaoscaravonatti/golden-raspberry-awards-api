@@ -12,21 +12,21 @@ const findProducerIntervals = (db: Db): FindProducerIntervalsRepository => async
     ORDER BY p.name, m.year
   `, [1])
 
-  const producerIntervals: { [producer: string]: number[] } = {}
+  const producerIntervals = new Map<string, number[]>()
 
   winners.forEach(({ name, year }) => {
-    if (!producerIntervals[name]) {
-      producerIntervals[name] = []
+    if (!producerIntervals.has(name)) {
+      producerIntervals.set(name, [])
     }
 
-    producerIntervals[name].push(year)
+    producerIntervals.get(name)!.push(year)
   })
 
   let result: ProducerInterval[] = []
   let targetInterval = type === 'min' ? Infinity : -Infinity
 
-  for (const producer in producerIntervals) {
-    const years = producerIntervals[producer]
+  for (const [producer, years] of producerIntervals.entries()) {
+    if (years.length === 1) continue
 
     for (let i = 1; i < years.length; i++) {
       const interval = years[i] - years[i - 1]
